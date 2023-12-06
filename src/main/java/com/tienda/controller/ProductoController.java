@@ -51,7 +51,7 @@ public class ProductoController {
             producto.setRutaImagen(
                     firebaseStorageService.cargaImagen(
                             imagenFile,
-                            "producto",
+                                "producto",
                             producto.getIdProducto()));
         }
         productoService.save(producto);
