@@ -1,16 +1,17 @@
 package com.tienda.service.impl;
 
+import com.tienda.dao.ProductoDao;
 import com.tienda.domain.Producto;
 import com.tienda.service.ProductoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tienda.dao.ProductoDao;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
+    //La anotacion autowired crea un unico objeto sin hacer new.
     @Autowired
     private ProductoDao productoDao;
 
@@ -41,25 +42,26 @@ public class ProductoServiceImpl implements ProductoService {
     public void delete(Producto producto) {
         productoDao.delete(producto);
     }
-
-    //Consulta JPA para traer informacion sobre el precio inferio y superior
+    
+    //Se implementa el método para recuperar los productos con una consulta ampliada
     @Override
     @Transactional(readOnly = true)
-    public List< Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
-
+    public List<Producto>buscaProductosPorPrecioEntre(double precioInf, double precioSup) {
         return productoDao.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
     }
-
-    //Consulta JPQL para traer informacion sobre el precio inferio y superior
+    
+    //Se implementa el método para recuperar los productos con una consulta JPQL
     @Override
     @Transactional(readOnly = true)
-    public List< Producto> metodoJPQL(double precioInf, double precioSup) {
-        return productoDao.metodoJPQL(precioInf, precioSup);
+    public List<Producto>consultaJPQL(double precioInf, double precioSup) {
+        return productoDao.consultaJPQL(precioInf, precioSup);
     }
     
-      @Override
+    //Se implementa el método para recuperar los productos con una consulta SQL
+    @Override
     @Transactional(readOnly = true)
-    public List< Producto> metodoNativo(double precioInf, double precioSup) {
-        return productoDao.metodoNativo(precioInf, precioSup);
+    public List<Producto>consultaSQL(double precioInf, double precioSup) {
+        return productoDao.consultaSQL(precioInf, precioSup);
     }
+    
 }
